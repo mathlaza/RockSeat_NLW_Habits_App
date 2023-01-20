@@ -8,7 +8,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        blackBackground: '#09090A'
+        blackBackground: '#09090A' // Libera essa cor
+      },
+      gridTemplateRows: {
+        7: 'repeat(7, minmax(0, 1fr))' // Libera opção de grid-rows-7
       }
     },
   },
