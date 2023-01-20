@@ -6,7 +6,11 @@ module.exports = {
     './index.html'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        blackBackground: '#09090A'
+      }
+    },
   },
   plugins: [],
 }
