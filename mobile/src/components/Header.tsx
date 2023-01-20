@@ -5,7 +5,7 @@ import colors from 'tailwindcss/colors';
 
 export function Header() {
   return (
-    <View className="w-full flex-raw items-center justify-between">
+    <View className="w-full flex-row items-center justify-between">
       <Logo />
 
       {/* Botao de + e sua opacidade quando clicado */}
