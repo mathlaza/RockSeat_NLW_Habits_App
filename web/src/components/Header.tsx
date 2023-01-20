@@ -3,7 +3,7 @@ import { Plus } from 'phosphor-react';
 
 export function Header() {
   return (
-    <header className="w-full max-w-3xl mx-auto flex items-center justify-between">
+    <header className="my-12 w-full max-w-3xl mx-auto flex items-center justify-between">
       <img src={logoImage} alt="habits" />
       <button
         type="button"
