@@ -1,8 +1,8 @@
-import { generateDatesFromYearBeginning } from "../utils/generate-dates-from-year-beginning";
+import { generateYearStartDate } from "../utils/generate-year-start-date";
 import { HabitDay } from "./HabitDay";
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
-const summaryDates = generateDatesFromYearBeginning();
+const summaryDates = generateYearStartDate();
 const summaryTableArea = 18 * 7; // 18 semanas de quadradinhos
 const amountOfDaysToFill = summaryTableArea - summaryDates.length;
 
