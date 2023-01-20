@@ -34,7 +34,8 @@ export async function appRoutes(app: FastifyInstance) {
       date: z.coerce.date(), // envia uma string e converte em date 
     })
 
-    const { date } = getDayParams.parse(request.query) // localhost:3333/day?date=2023-01-19T00
+    const { date } = getDayParams.parse(request.query); // localhost:3333/day?date=2023-01-19T00
+    const parsedDate = dayjs(date).startOf('day');
 
     const weekDay = dayjs(date).get('day'); // Pega o dia da semana
 
@@ -52,8 +53,22 @@ export async function appRoutes(app: FastifyInstance) {
       }
     })
 
+    const day = await prisma.day.findUnique({
+      where: {
+        date: parsedDate.toDate(),
+      },
+      include: {
+        dayHabits: true, // dayHabits são os hábitos completados
+      }
+    })
+
+    const completedHabits = day?.dayHabits.map((dayHabit) => {
+      return dayHabit.habit_id;
+    }) // o "?" verifica se o dia existe
+
     return {
       possibleHabits,
+      completedHabits,
     }
   })
 }
