@@ -124,7 +124,7 @@ export async function appRoutes(app: FastifyInstance) {
     }
   })
 
-  // Retorna um resumo de informações
+  // Retorna um resumo de informações do dia
   app.get('/summary', async () => {
     const summary = await prisma.$queryRaw`
       SELECT D.id, D.date,
