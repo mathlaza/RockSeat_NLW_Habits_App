@@ -66,7 +66,7 @@ export async function appRoutes(app: FastifyInstance) {
 
     const completedHabits = day?.dayHabits.map((dayHabit) => {
       return dayHabit.habit_id;
-    }) // o "?" verifica se o dia existe
+    }) ?? [] // o "?" verifica se o dia existe, o ?? retorna [] caso valor seja indefinido
 
     return {
       possibleHabits,
