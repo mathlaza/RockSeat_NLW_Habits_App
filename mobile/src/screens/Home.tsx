@@ -5,6 +5,7 @@ import { Header } from '../components/Header';
 import { generateRangeDatesFromYearStart } from '../utils/generate-range-between-dates';
 import { api } from '../lib/axios';
 import { useState, useEffect } from 'react';
+import { Loading } from '../components/Loading';
 
 const weekDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
 const summaryDates = generateRangeDatesFromYearStart();
@@ -21,6 +22,7 @@ export function Home() {
     try {
       setLoading(true);
       const response = await api.get('/summary');
+      console.log(response.data);
       setSummary(response.data);
     } catch (error) {
       Alert.alert('Ops', 'Não foi possível carregar o sumário de hábitos.')
@@ -33,6 +35,12 @@ export function Home() {
   useEffect(() => {
     fetchData(); // Executa a função no momento que o componente é montado
   }, []);
+
+  if(loading) {
+    return (
+      <Loading />
+    )
+  }
 
   return (
     <View className="flex-1 bg-background px-8 pt-16">
