@@ -21,11 +21,11 @@ export function New() {
 
   return (
     <View className="flex-1 bg-background px-8 pt-16">
-      <ScrollView 
-      showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 100 }} // Desgruda do bottom o botão Confirmar quando clicar na box e aparecer o teclado
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }} // Desgruda do bottom o botão Confirmar quando clicar na box e aparecer o teclado
       >
- 
+
         <BackButton />
 
         <Text className="mt-6 text-white font-extrabold text-3xl">
