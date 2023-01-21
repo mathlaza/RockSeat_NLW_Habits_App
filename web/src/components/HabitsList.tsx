@@ -1,4 +1,5 @@
 import * as Checkbox from '@radix-ui/react-checkbox';
+import dayjs from 'dayjs';
 import { Check } from 'phosphor-react';
 import { useEffect, useState } from 'react';
 import { api } from '../lib/axios';
@@ -29,13 +30,38 @@ export function HabitsList({ date }: HabitsListProps) {
     })
   }, []);
 
+  // Desabilita o check em datas passadas:
+  const isDateInPast = dayjs(date) // Pega a data
+    .endOf('day') // Coloca o horário dela pro final do dia
+    .isBefore(new Date()); // E aí sim valida que é a anterior
+
+  async function handleToggleHabit(habitId: string) {
+    await api.patch(`/habits/${habitId}/toggle`)
+
+    const isHabitAlreadyCompleted = habitsInfo?.completedHabits.includes(habitId);
+    let completedHabits: string[] = [];
+
+    if (isHabitAlreadyCompleted) {
+      completedHabits = habitsInfo!.completedHabits.filter((id) => id !== habitId);
+    } else {
+      completedHabits = [...habitsInfo!.completedHabits, habitId];
+    }
+    
+    setHabitsInfo({
+      possibleHabits: habitsInfo!.possibleHabits,
+      completedHabits,
+    })
+  }
+
   return (
     <div className="mt-6 flex-col gap-3">
       {habitsInfo?.possibleHabits.map((habit) => {
         return (
           <Checkbox.Root
             key={habit.id}
+            onCheckedChange={() => handleToggleHabit(habit.id)}
             checked={habitsInfo.completedHabits.includes(habit.id)}
+            disabled={isDateInPast}
             className="flex items-center gap-3 group"
           >
             <div className="h-8 w-8 rounded-lg flex items-center justify-center bg-zinc-900 border-2 border-zinc-800 group-data-[state=checked]:bg-green-500 group-data-[state=checked]:border-green-500">
