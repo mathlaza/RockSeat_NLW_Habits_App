@@ -29,7 +29,6 @@ export function Habit() {
   const [loading, setLoading] = useState(true);
   const [dayInfo, setDayInfo] = useState<DayInfoProps | null>(null);
   const [completedHabits, setCompletedHabits] = useState<string[]>([]);
-  const [remove, setRemove] = useState(false);
 
   const route = useRoute();
   const { date } = route.params as Params;
