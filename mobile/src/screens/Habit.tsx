@@ -9,6 +9,7 @@ import { Loading } from "../components/Loading";
 import { api } from "../lib/axios";
 import { generateProgressPercentage } from "../utils/generate-progress-percentage";
 import { HabitsEmpty } from "../components/HabitsEmpty";
+import clsx from "clsx";
 
 interface Params {
   date: string;
@@ -89,7 +90,9 @@ export function Habit() {
 
         <ProgressBar progress={habitsProgress} />
 
-        <View className="mt-6">
+        <View className={clsx("mt-6", {
+          ['opacity-50']: isDateInPast // Deixa opaco os hábitos de datas passadas
+        })}>
           {
             dayInfo?.possibleHabits.length !== 0 ?
               dayInfo?.possibleHabits.map((habit) => (
