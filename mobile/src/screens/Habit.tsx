@@ -30,11 +30,12 @@ export function Habit() {
   const route = useRoute();
   const { date } = route.params as Params;
   const parsedDate = dayjs(date);
+  const isDateInPast = parsedDate.endOf('day').isBefore(new Date()); //Verifica se dia já passou
   const dayOfWeek = parsedDate.format('dddd');
   const dayAndMonth = parsedDate.format('DD/MM');
-  const habitsProgress = dayInfo?.possibleHabits.length 
-  ? generateProgressPercentage(dayInfo.possibleHabits.length, completedHabits.length) 
-  : 0;
+  const habitsProgress = dayInfo?.possibleHabits.length
+    ? generateProgressPercentage(dayInfo.possibleHabits.length, completedHabits.length)
+    : 0;
 
   async function fetchHabits() {
     try {
@@ -91,17 +92,25 @@ export function Habit() {
         <View className="mt-6">
           {
             dayInfo?.possibleHabits.length !== 0 ?
-            dayInfo?.possibleHabits.map((habit) => (
-              <Checkbox
-                key={habit.id}
-                title={habit.title}
-                checked={completedHabits.includes(habit.id)}
-                onPress={() => handleToggleHabit(habit.id)}
-              />
-            ))
-            : <HabitsEmpty />
+              dayInfo?.possibleHabits.map((habit) => (
+                <Checkbox
+                  key={habit.id}
+                  title={habit.title}
+                  checked={completedHabits.includes(habit.id)}
+                  disabled={isDateInPast}
+                  onPress={() => handleToggleHabit(habit.id)}
+                />
+              ))
+              : <HabitsEmpty />
           }
         </View>
+        {
+          isDateInPast && (
+            <Text className="text-white mt-10 text-center">
+              Você não pode editar hábitos de uma data passada.
+            </Text>
+          )
+        }
       </ScrollView>
     </View>
   )
