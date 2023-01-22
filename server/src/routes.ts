@@ -145,4 +145,24 @@ export async function appRoutes(app: FastifyInstance) {
     `
     return summary
   })
+
+  // Deletar um hábito do dia:
+  app.delete('/habits/:id/delete', async (request) => {
+    const deletedHabidId = z.object({
+      id: z.string().uuid(),
+    })
+
+    const { id } = deletedHabidId.parse(request.params)
+
+    const deletedHabit = await prisma.habit.delete({
+      where: {
+        id: id,
+      },
+    })
+
+    return {
+      deleted: deletedHabit,
+    }
+  })
+
 }

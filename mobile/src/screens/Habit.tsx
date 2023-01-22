@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { BackButton } from "../components/BackButton";
 import dayjs from "dayjs";
@@ -10,6 +10,8 @@ import { api } from "../lib/axios";
 import { generateProgressPercentage } from "../utils/generate-progress-percentage";
 import { HabitsEmpty } from "../components/HabitsEmpty";
 import clsx from "clsx";
+import { Feather } from '@expo/vector-icons';
+import colors from "tailwindcss/colors";
 
 interface Params {
   date: string;
@@ -27,6 +29,7 @@ export function Habit() {
   const [loading, setLoading] = useState(true);
   const [dayInfo, setDayInfo] = useState<DayInfoProps | null>(null);
   const [completedHabits, setCompletedHabits] = useState<string[]>([]);
+  const [remove, setRemove] = useState(false);
 
   const route = useRoute();
   const { date } = route.params as Params;
@@ -58,7 +61,7 @@ export function Habit() {
   async function handleToggleHabit(habitId: string) {
     try {
       await api.patch(`/habits/${habitId}/toggle`);
-      
+
       if (completedHabits.includes(habitId)) {
         setCompletedHabits(prevState => prevState.filter((habit) => habit !== habitId));
       } else {
@@ -78,6 +81,19 @@ export function Habit() {
     return (
       <Loading />
     )
+  }
+
+
+  async function handleDelete(habitId: string) {
+    try {
+      // Deleta hábito no banco de dados
+      await api.delete(`/habits/${habitId}/delete`);
+      // Busca os que sobraram
+      fetchHabits()
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Ops', 'Não foi possível carregar as informações dos hábitos')
+    }
   }
 
   return (
@@ -103,21 +119,43 @@ export function Habit() {
           {
             dayInfo?.possibleHabits.length !== 0 ?
               dayInfo?.possibleHabits.map((habit) => (
-                <Checkbox
+                <Text
                   key={habit.id}
-                  title={habit.title}
-                  checked={completedHabits.includes(habit.id)}
-                  disabled={isDateInPast}
-                  onPress={() => handleToggleHabit(habit.id)}
-                />
+                  className="flex flex-col"
+                >
+                  <Checkbox
+                    title={habit.title}
+                    checked={completedHabits.includes(habit.id)}
+                    disabled={isDateInPast}
+                    onPress={() => handleToggleHabit(habit.id)}
+                    isInHabitsPage={true}
+                    className="pr-3"
+                  />
+
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => handleDelete(habit.id)}
+                    disabled={isDateInPast}
+                    className={clsx("bg-zinc-800", "rounded-xl", {
+                      ['opacity-0']: isDateInPast
+                    })}
+                  >
+                    <Feather
+                      name="x"
+                      size={32}
+                      color={colors.zinc[400]}
+                    />
+                  </TouchableOpacity>
+                </Text>
               ))
               : <HabitsEmpty />
           }
         </View>
+
         {
           isDateInPast && (
             <Text className="text-white mt-10 text-center">
-              Você não pode editar hábitos de uma data passada.
+              Você não pode completar hábitos de uma data passada.
             </Text>
           )
         }

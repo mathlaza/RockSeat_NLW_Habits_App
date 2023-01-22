@@ -4,7 +4,11 @@ import colors from "tailwindcss/colors";
 import { useNavigation } from '@react-navigation/native';
 
 export function BackButton() {
-  const { goBack } = useNavigation();
+  const { navigate } = useNavigation();
+
+  function goBack() {
+    navigate('home');
+  }
 
   return (
     <TouchableOpacity
