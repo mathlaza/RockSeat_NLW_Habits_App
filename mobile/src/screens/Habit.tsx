@@ -8,6 +8,7 @@ import { Checkbox } from "../components/Checkbox";
 import { Loading } from "../components/Loading";
 import { api } from "../lib/axios";
 import { generateProgressPercentage } from "../utils/generate-progress-percentage";
+import { HabitsEmpty } from "../components/HabitsEmpty";
 
 interface Params {
   date: string;
@@ -89,8 +90,8 @@ export function Habit() {
 
         <View className="mt-6">
           {
-            dayInfo?.possibleHabits &&
-            dayInfo.possibleHabits.map((habit) => (
+            dayInfo?.possibleHabits.length !== 0 ?
+            dayInfo?.possibleHabits.map((habit) => (
               <Checkbox
                 key={habit.id}
                 title={habit.title}
@@ -98,6 +99,7 @@ export function Habit() {
                 onPress={() => handleToggleHabit(habit.id)}
               />
             ))
+            : <HabitsEmpty />
           }
         </View>
       </ScrollView>
