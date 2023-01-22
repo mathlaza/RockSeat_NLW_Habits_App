@@ -5,7 +5,7 @@ export function HabitsEmpty() {
   const { navigate } = useNavigation();
 
   return (
-    <Text className="text-zinc-400 text-base">
+    <Text className="text-zinc-400 text-base text-center">
       Você ainda não está monitorando nenhum hábito, {''}
        <Text
        className="text-violet-400 text-base underline active:text-violet-500"
