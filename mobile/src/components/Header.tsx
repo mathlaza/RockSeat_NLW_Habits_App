@@ -1,8 +1,8 @@
-import { View, TouchableOpacity, Text } from 'react-native';
 import Logo from '../assets/logo.svg';
-import { Feather } from '@expo/vector-icons';
 import colors from 'tailwindcss/colors';
+import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
+import { View, TouchableOpacity, Text } from 'react-native';
 
 export function Header() {
   const { navigate } = useNavigation();

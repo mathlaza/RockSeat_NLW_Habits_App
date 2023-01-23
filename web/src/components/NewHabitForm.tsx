@@ -21,8 +21,14 @@ export function NewHabitForm() {
 
     event.preventDefault(); // Não fazer o redirecionamento de página
 
-    if (!title || weekDays.length === 0) { // Se user não preencheu título ou dia da semana
-      return // O formulário para aqui e não faz nada
+    if (!title.trim()) {
+      return alert('Informe o nome do hábito');
+    }
+    if (weekDays.length === 0) {
+      return alert('Escolha a recorrência')
+    }
+    if(title.length > 18) {
+      return alert('Deve possuir no máximo 20 caracteres');
     }
 
     postApi();

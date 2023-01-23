@@ -1,11 +1,11 @@
 // Interface para cadastrar
+import { api } from '../lib/axios';
 import { useState } from 'react';
 import { ScrollView, View, Text, TextInput, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import { BackButton } from '../components/BackButton';
 import { Checkbox } from '../components/Checkbox';
 import { Feather } from '@expo/vector-icons';
 import colors from 'tailwindcss/colors';
-import { api } from '../lib/axios';
 import { useNavigation } from '@react-navigation/native';
 
 const avaiableWeekDays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
@@ -42,7 +42,6 @@ export function New() {
       }
       if(title.length > 18) {
         return Alert.alert('Novo hábito', 'Deve possuir no máximo 20 caracteres');
-
       }
 
       await api.post('/habits', { title, weekDays });

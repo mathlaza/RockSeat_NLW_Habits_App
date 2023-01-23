@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { View } from "react-native";
+import { useEffect } from "react";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 
 interface Props {

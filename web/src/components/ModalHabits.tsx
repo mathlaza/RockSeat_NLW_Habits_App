@@ -59,6 +59,8 @@ export function ModalHabits({ date, handleCompletedPercentage, completedPercenta
     return <div></div>;
   }
 
+  const isDateInPast = dayjs(date).endOf('day').isBefore(new Date());
+
   return (
     <Popover.Content className='min-w-[320px] p-6 rounded-2xl bg-zinc-900 flex flex-col focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-zinc-900'>
       <span className='font-semibold text-zinc-400 first-letter:capitalize'>

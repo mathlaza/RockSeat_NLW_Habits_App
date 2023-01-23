@@ -1,7 +1,7 @@
-import { TouchableOpacity, View, Text, TouchableOpacityProps } from "react-native";
-import { Feather } from '@expo/vector-icons';
 import colors from "tailwindcss/colors";
+import { Feather } from '@expo/vector-icons';
 import Animated, { ZoomIn, ZoomOut } from "react-native-reanimated";
+import { TouchableOpacity, View, Text, TouchableOpacityProps } from "react-native";
 
 interface Props extends TouchableOpacityProps {
   title: string;

@@ -1,17 +1,17 @@
+import dayjs from "dayjs";
+import { api } from "../lib/axios";
+import clsx from "clsx";
+import colors from "tailwindcss/colors";
+import { Loading } from "../components/Loading";
+import { Checkbox } from "../components/Checkbox";
 import { useEffect, useState } from "react";
 import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { BackButton } from "../components/BackButton";
-import dayjs from "dayjs";
 import { ProgressBar } from "../components/ProgressBar";
-import { Checkbox } from "../components/Checkbox";
-import { Loading } from "../components/Loading";
-import { api } from "../lib/axios";
 import { generateProgressPercentage } from "../utils/generate-progress-percentage";
 import { HabitsEmpty } from "../components/HabitsEmpty";
-import clsx from "clsx";
 import { Feather } from '@expo/vector-icons';
-import colors from "tailwindcss/colors";
 
 interface Params {
   date: string;
