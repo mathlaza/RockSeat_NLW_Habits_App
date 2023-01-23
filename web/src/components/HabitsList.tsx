@@ -63,6 +63,7 @@ export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
 
   async function handleDelete(habitId: string) {
     try {
+      await handleToggleHabit(habitId);
       // Deleta hábito no banco de dados
       await api.delete(`/habits/${habitId}/delete`);
       // Busca os que sobraram

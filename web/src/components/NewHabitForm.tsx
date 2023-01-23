@@ -6,7 +6,7 @@ import { api } from "../lib/axios";
 const availableWeekDays = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 
 export function NewHabitForm() {
-  
+
   const [title, setTitle] = useState('')
   const [weekDays, setWeekDays] = useState<number[]>([]);
 
@@ -17,7 +17,8 @@ export function NewHabitForm() {
     })
   }
 
-  function createNewHabit(event: FormEvent) {
+  const createNewHabit = (event: FormEvent) => {
+
     event.preventDefault(); // Não fazer o redirecionamento de página
 
     if (!title || weekDays.length === 0) { // Se user não preencheu título ou dia da semana
@@ -29,6 +30,7 @@ export function NewHabitForm() {
     setTitle('');
     setWeekDays([]);
     alert('Hábito criado com sucesso!');
+    window.location.reload()
   }
 
 
@@ -57,8 +59,7 @@ export function NewHabitForm() {
         className="p-4 rounded-lg mt-3 bg-zinc-800 text-white placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-violet-600 focus:ring-offset-2 focus:ring-offset-blackBackground"
         autoFocus // Quando o modal abrir, o input vai receber o foco do teclado
         value={title}
-        onChange={event => setTitle(event.target.value)}
-      />
+        onChange={event => setTitle(event.target.value)} />
 
       <label htmlFor="" className="font-semibold leading-tight mt-4">
         Qual a recorrência?
@@ -83,7 +84,7 @@ export function NewHabitForm() {
                 {weekDay}
               </span>
             </Checkbox.Root>
-          )
+          );
         })}
       </div>
 
@@ -95,6 +96,7 @@ export function NewHabitForm() {
         <Check size={20} weight="bold" />
         Confirmar
       </button>
+
     </form>
   )
 }

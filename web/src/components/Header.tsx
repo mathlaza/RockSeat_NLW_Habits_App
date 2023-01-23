@@ -4,8 +4,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { NewHabitForm } from './NewHabitForm';
 
 // type Props = {
-//   submited: number,
-//   setSubmited: (active: number) => void;
+//   setUpdate: (active: boolean) => void;
 // }
 
 // { submited, setSubmited}: Props 
