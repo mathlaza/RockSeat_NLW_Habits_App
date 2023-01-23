@@ -67,6 +67,7 @@ export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
       await api.delete(`/habits/${habitId}/delete`);
       // Busca os que sobraram
       fetchHabits()
+      // Update em HabitDay após a remoção
     } catch (error) {
       console.log(error);
       alert('Ops, não foi possível carregar as informações dos hábitos')
