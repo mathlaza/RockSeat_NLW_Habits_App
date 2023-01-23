@@ -2,63 +2,45 @@ import * as Checkbox from '@radix-ui/react-checkbox';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { Check, X } from 'phosphor-react';
-import { useEffect, useState } from 'react';
 import { api } from '../lib/axios';
+import { calculateCompletedPercentage } from '../utils/calculate-completed-percentage';
+import { IHabitsInfo } from './ModalHabits';
 
-interface HabitsListProps {
-  date: Date
-  onCompletedChanged: (completed: number) => void
+interface IHabitsList {
+  date: Date;
+  handleCompletedPercentage: (percentage: number) => void;
+  habitsInfo: IHabitsInfo;
+  onCompletedChanged: (
+    habitsInfo: IHabitsInfo,
+    completedHabits: string[]
+  ) => void;
+  fetchApi: () => void
 }
 
-interface HabitsInfo {
-  possibleHabits: {
-    id: string;
-    title: string;
-    created_at: string;
-  }[],
-  completedHabits: string[]
-}
-
-export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
-  const [habitsInfo, setHabitsInfo] = useState<HabitsInfo>()
-
-  function fetchHabits() {
-    api.get('/day', {
-      params: { // Tudo nesse objeto será convertido para query params
-        date: date.toISOString(),
-      }
-    }).then(response => {
-      setHabitsInfo(response.data);
-    })
-  }
-
-  useEffect(() => {
-    fetchHabits()
-  }, []);
-
-  // Desabilita o check em datas passadas:
-  const isDateInPast = dayjs(date) // Pega a data
-    .endOf('day') // Coloca o horário dela pro final do dia
-    .isBefore(new Date()); // E aí sim valida que é a anterior
+export function HabitsList({ date, handleCompletedPercentage, habitsInfo, onCompletedChanged, fetchApi }: IHabitsList) {
 
   async function handleToggleHabit(habitId: string) {
-    await api.patch(`/habits/${habitId}/toggle`)
+    api.patch(`habits/${habitId}/toggle`);
 
-    const isHabitAlreadyCompleted = habitsInfo?.completedHabits.includes(habitId);
+    const isHabitAlreadyCompleted =
+      habitsInfo.completedHabits.includes(habitId);
+
     let completedHabits: string[] = [];
 
     if (isHabitAlreadyCompleted) {
-      completedHabits = habitsInfo!.completedHabits.filter((id) => id !== habitId);
+      completedHabits = habitsInfo.completedHabits.filter(
+        (id) => id !== habitId
+      );
     } else {
-      completedHabits = [...habitsInfo!.completedHabits, habitId];
+      completedHabits = [...habitsInfo.completedHabits, habitId];
     }
 
-    setHabitsInfo({
-      possibleHabits: habitsInfo!.possibleHabits,
-      completedHabits,
-    })
-
-    onCompletedChanged(completedHabits.length);
+    const updatedCompletedPercentage = calculateCompletedPercentage(
+      habitsInfo.possibleHabits.length,
+      completedHabits.length
+    );
+    handleCompletedPercentage(updatedCompletedPercentage);
+    onCompletedChanged(habitsInfo, completedHabits);
   }
 
   async function handleDelete(habitId: string) {
@@ -67,13 +49,14 @@ export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
       // Deleta hábito no banco de dados
       await api.delete(`/habits/${habitId}/delete`);
       // Busca os que sobraram
-      fetchHabits()
-      // Update em HabitDay após a remoção
+      fetchApi()
     } catch (error) {
       console.log(error);
       alert('Ops, não foi possível carregar as informações dos hábitos')
     }
   }
+
+  const isDateInPast = dayjs(date).endOf('day').isBefore(new Date());
 
   return (
     <div className="mt-6 flex-col gap-3">
@@ -107,7 +90,7 @@ export function HabitsList({ date, onCompletedChanged }: HabitsListProps) {
               })}
               disabled={isDateInPast}
             >
-              <X size={32}/>
+              <X size={32} />
             </button>
           </div>
         )

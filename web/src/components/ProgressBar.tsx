@@ -1,8 +1,8 @@
-interface ProgressBarProps {
+interface IProgressBar {
   progress: number
 }
 
-export function ProgressBar(props: ProgressBarProps) {
+export function ProgressBar(props: IProgressBar) {
   return (
     <div className="h-3 rounded-xl bg-zinc-700 w-full mt-4">
       <div

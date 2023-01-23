@@ -1,18 +1,23 @@
 import * as Popover from '@radix-ui/react-popover';
 import clsx from 'clsx';
-import { ProgressBar } from './ProgressBar';
 import dayjs from 'dayjs';
-import { HabitsList } from './HabitsList';
 import { useState } from 'react';
+import { ModalHabits } from './ModalHabits';
+import { calculateCompletedPercentage } from '../utils/calculate-completed-percentage';
 
-interface HabitDayProps {
+interface IHabitDay {
   date: Date
   defaultCompleted?: number
   amount?: number
 }
 
-export function HabitDay({ defaultCompleted = 0, amount = 0, date }: HabitDayProps) {
-  const [completed, setCompleted] = useState(defaultCompleted);
+export function HabitDay({ defaultCompleted = 0, amount = 0, date }: IHabitDay) {
+  const defaultCompletedPercentage = calculateCompletedPercentage(
+    amount,
+    defaultCompleted
+  );
+
+  const [completedPercentage, setCompletedPercentage] = useState(defaultCompletedPercentage);
 
   const dayAndMonth = dayjs(date).format('DD/MM')
   const dayOfWeek = dayjs(date).format('dddd')
@@ -20,10 +25,8 @@ export function HabitDay({ defaultCompleted = 0, amount = 0, date }: HabitDayPro
   const today = dayjs().startOf('day').toDate();
   const isToday = dayjs(date).isSame(today);
 
-  const completedPercentage = amount > 0 ? Math.round((completed / amount) * 100) : 0;
-
-  function handleCompletedChanged(completed: number) {
-    setCompleted(completed);
+  function handleCompletedPercentage(completed: number) {
+    setCompletedPercentage(completed);
   }
 
   return (
@@ -36,7 +39,7 @@ export function HabitDay({ defaultCompleted = 0, amount = 0, date }: HabitDayPro
           'bg-violet-700 border-violet-500': completedPercentage >= 40 && completedPercentage < 60,
           'bg-violet-600 border-violet-500': completedPercentage >= 60 && completedPercentage < 80,
           'bg-violet-500 border-violet-400': completedPercentage >= 80,
-          ["border-white border-4"]: isToday // Se o dia for o atual (hoje), deixa o quadradinho com uma borda
+          'border-white border-4': isToday // Se o dia for o atual (hoje), deixa o quadradinho com uma borda
         })}
       />
 
@@ -45,9 +48,11 @@ export function HabitDay({ defaultCompleted = 0, amount = 0, date }: HabitDayPro
           <span className="font-semibold text-zinc-400">{dayOfWeek}</span>
           <span className="mt-1 font-extrabold leading-tight text-3xl">{dayAndMonth}</span>
 
-          <ProgressBar progress={completedPercentage} />
-
-          <HabitsList date={date} onCompletedChanged={handleCompletedChanged} />
+          <ModalHabits
+            date={date}
+            handleCompletedPercentage={handleCompletedPercentage}
+            completedPercentage={completedPercentage}
+          />
 
           <Popover.Arrow height={9} width={16} className="fill-zinc-900" />
         </Popover.Content>
