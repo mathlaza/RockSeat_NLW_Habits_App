@@ -1,7 +1,8 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "Habits Control",
+    "slug": "habits-control",
+    "description": "App de controle de hábitos criado durante o desafio semanal NLW da RocketSeat, ocorrido entre os dias 16/01 e 20/01/23.",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
