@@ -85,6 +85,18 @@ async function run() {
       }
     }),
 
+    prisma.day.create({
+      data: {
+        /** Tuesday */
+        date: new Date('2023-01-10T03:00:00.000z'),
+        dayHabits: {
+          create: {
+            habit_id: thirdHabitId, // thirdHabitId (Dormir 8h) foi completo no dia "date"
+          }
+        }
+      }
+    }),
+
     /**
      * Habits (Complete/Available): 1/1
      */
