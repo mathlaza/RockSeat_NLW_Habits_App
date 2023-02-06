@@ -42,25 +42,23 @@ Foram criadas duas versões: `Web` e `Mobile`.
 <details>
 <summary><strong>👨‍🔧 Desafios e melhorias encontrados no caminho ⚙️</strong></summary><br />
 
-  Após a conclusão do evento, algumas mudanças foram incluídas no projeto, como:
-  * Opção de excluir hábitos existentes.
-  <br>
-  (Implementado o método HTTP `delete`, e a atualização dos hábitos restantes no banco de dados);
+  <p>Após a conclusão do evento, algumas mudanças foram incluídas no projeto, como:</p>
+
   <br>
 
-  * Possibilidade de voltar para a tela inicial tanto pelo botão ← (voltar) do app quanto pelo botão físico do celular na versão mobile.
-  <br>
-  (Implementada com o uso da API `BackHandler` do React Native);
+  * <p><strong>Opção de excluir hábitos existentes.</strong> (Implementado o método HTTP "delete", e a atualização dos hábitos restantes no banco de dados);</p>
+
   <br>
 
-  * Barra de progresso se deformava se a quantidade de hábitos concluídos ultrapassasse o total já registrado.
-  <br>
-  (Solucionado com o uso de porcentagem nos atributos de CSS);
+  * <p><strong>Possibilidade de voltar para a tela inicial tanto pelo botão ← (voltar) do app quanto pelo botão físico do celular na versão mobile.</strong> (Implementada com o uso da API "BackHandler" do React Native);</p>
+
   <br>
 
-  * Mudança do banco de dados de SQLite para PostgreSQL.
+  * <p><strong>Barra de progresso se deformava se a quantidade de hábitos concluídos ultrapassasse o total já registrado.</strong> (Solucionado com o uso de porcentagem nos atributos de CSS);</p>
+
   <br>
-  (Houveram grandes dificuldades para realizar o deploy da aplicação, pois o banco original utilizado era SQLite. Por isso, apesar de nunca ter usado, migrei o servidor para PostgreSQL, o que possibilitou o deploy do back-end);
+
+  * <p><strong>Mudança do banco de dados de SQLite para PostgreSQL.</strong> (Houveram grandes dificuldades para realizar o deploy da aplicação, pois o banco original utilizado era SQLite. Por isso, apesar de nunca ter usado, migrei o servidor para PostgreSQL, o que possibilitou o deploy do back-end);</p>
 
 </details>
 
