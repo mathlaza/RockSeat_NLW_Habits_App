@@ -1,5 +1,4 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "target": "ESNext",
     "useDefineForClassFields": true,
@@ -28,5 +27,6 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
+  "extends": "./node_modules/expo/tsconfig.base.json"
 }
