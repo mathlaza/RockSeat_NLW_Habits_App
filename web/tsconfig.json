@@ -28,5 +28,5 @@
       "path": "./tsconfig.node.json"
     }
   ],
-  "extends": "./node_modules/expo/tsconfig.base.json"
+  "extends": "./tsconfig.base.json"
 }
